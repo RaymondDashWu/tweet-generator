@@ -12,8 +12,11 @@ def generate_sentence():
         tmp_dictionary.append(line.strip('\n'))
     for index in range(0, len(tmp_dictionary)):
         while len(sentence_storage) < int(sys.argv[1]):
-            randomizer = random.randint(0, len(tmp_dictionary) - 1)
-            sentence_storage.append(tmp_dictionary[randomizer])
+            randomizer = random.choice(tmp_dictionary)
+            # randomizer = random.randint(0, len(tmp_dictionary) - 1)
+            # sentence_storage.append(tmp_dictionary[randomizer])
+            sentence_storage.append(randomizer)
+
     return " ".join(sentence_storage)
 
 if __name__ == '__main__':
