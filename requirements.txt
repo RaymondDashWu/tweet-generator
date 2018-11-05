@@ -1,6 +1,7 @@
 Click
 Flask
 itsdangerous
+gunicorn
 Jinja2
 MarkupSafe
 pip
