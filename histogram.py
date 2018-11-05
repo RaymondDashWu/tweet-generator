@@ -43,7 +43,7 @@ def frequency_list_of_list(unique, source_text):
     return listoflists
 
 def frequency_list_of_tuples(unique, source_text):
-    listoftuples = []
+    listoftuples = ()
     for line in source_text:
         for word in unique:
 
