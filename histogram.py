@@ -43,11 +43,16 @@ def frequency_list_of_list(unique, source_text):
     return listoflists
 
 def frequency_list_of_tuples(unique, source_text):
-    pass
+    listoftuples = []
+    for line in source_text:
+        for word in unique:
 
 def stochastic_sampling(filtered):
     pass
 
+
+if __name__ == "__main__":
+    read_sterilize_source("text-corpus.txt")
     
     # corpus_length = sum(filtered.values())
     # destination = random.randint(0, corpus_length)
