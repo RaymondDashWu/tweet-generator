@@ -3,8 +3,10 @@ import sys
 import random
 
 def read_sterilize_source(source_text):
-    with open(source_text) as file:
-        source = file.read()
+    # with open(source_text) as file:
+    #     source = file.read()
+
+
     # Filters out all punctuation and white space (line breaks + spaces) using regex and
     # substitutes with a space " ". Then splits into array
     # Updated for edge cases '. Now keeps words that use ' as part of word (I've, haven't, etc.)
@@ -32,28 +34,41 @@ def frequency(unique, filtered):
     return words_dict
 
 
-def frequency_list_of_list(unique, source_text):
+def frequency_list_of_list(unique, filtered):
     listoflists = []
     for entry in unique:
         counter = 0
-        for index in source_text:
+        for index in filtered:
             if entry == index:
                 counter += 1
         listoflists.append([entry, counter])
     return listoflists
 
-def frequency_list_of_tuples(unique, source_text):
-    listoftuples = ()
-    for line in source_text:
-        for word in unique:
+def frequency_list_of_tuples(unique, filtered):
+    listoftuples = []
+    for entry in unique:
+        counter = 0
+        for index in filtered:
+            if entry == index:
+                counter += 1
+        listoftuples.append((entry, counter))
+    return listoftuples
 
 def stochastic_sampling(filtered):
     pass
 
 
 if __name__ == "__main__":
-    read_sterilize_source("text-corpus.txt")
-    
+    with open("text-corpus.txt", "r") as file:
+        source = file.read()
+    # removes symbols, punctuation, etc. from source text and puts in array
+    sterilized_source = read_sterilize_source(source)
+    # retrieves uniques from above sterilized source
+    sterilized_source_uniques = unique_words(sterilized_source)
+    # counts the instances of uniques in sterilized source text
+    sterilized_source_frequency = frequency(sterilized_source_uniques, sterilized_source)
+
+
     # corpus_length = sum(filtered.values())
     # destination = random.randint(0, corpus_length)
 
