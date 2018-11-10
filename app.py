@@ -4,5 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return random.choice(unique_words("text-corpus.txt"))
-    return "ello, gov'na!"
+    for _ in range(0,10):
+        return random.choice(unique_words(read_sterilize_source("text-corpus.txt")))
+
+print(hello_world())

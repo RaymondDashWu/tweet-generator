@@ -18,7 +18,7 @@ def read_sterilize_source(source_text):
 def unique_words(filtered):
     # Updated to account for uppercase letters by lowering all of them
     unique = []
-    for word in filtered.lower():
+    for word in filtered:
         if word not in unique:
             unique.append(word)
     return unique
@@ -54,9 +54,44 @@ def frequency_list_of_tuples(unique, filtered):
         listoftuples.append((entry, counter))
     return listoftuples
 
-def stochastic_sampling(filtered):
-    pass
+def stochastic_sampling(words_dict):
+    dict_value_totals = []
+    for value in words_dict:
+        dict_value_totals.append(words_dict[value])
+    number_total = 0
+    for number in dict_value_totals:
+        number_total += number
+    random_picker = random.randint(0, number_total)
+    for value in words_dict:
+        random_picker -= words_dict[value]
+        if random_picker < words_dict[value]:
+            return value
 
+def multiple_stochastic_sampling(words_dict):
+    dict_value_totals = []
+    for value in words_dict:
+        dict_value_totals.append(words_dict[value])
+    number_total = 0
+    for number in dict_value_totals:
+        number_total += number
+    
+    total_random_picked = []
+    while len(total_random_picked) < 10000:
+        random_picker = random.randint(0, number_total)
+        for value in words_dict:
+            if random_picker <= words_dict[value]:
+                total_random_picked.append(value)
+            random_picker -= words_dict[value]
+
+    # TO-FIX: Is not random over a sample of 10,000. Sample below. Logic possibly wrong but code functions as intended.
+    # {'fish': 1447, 'two': 1688, 'red': 1896, 'Blue': 2121, 'l': 2343, 'one': 506}
+    tmp_dict = {}
+    for word in total_random_picked:
+        if word in tmp_dict:
+            tmp_dict[word] += 1
+        else:
+            tmp_dict[word] = 1
+    return tmp_dict
 
 if __name__ == "__main__":
     with open("text-corpus.txt", "r") as file:
@@ -80,9 +115,15 @@ if __name__ == "__main__":
     # return filtered[random.randint(0,len(filtered) - 1)]
 
 # one fish two fish blue fish red fish
-print(read_sterilize_source("text-corpus.txt"))
-# print(unique_words(read_sterilize_source("text-corpus.txt")))
-print(frequency(unique_words("text-corpus.txt"),read_sterilize_source("text-corpus.txt")))
+clean_txt_list = read_sterilize_source("text-corpus.txt")
+print(clean_txt_list)
+unique_words_list = unique_words(clean_txt_list)
+print(unique_words_list)
+# print(frequency(unique_words("text-corpus.txt"),read_sterilize_source("text-corpus.txt")))
+freq = frequency(unique_words_list, clean_txt_list)
+print(freq)
+
+print(multiple_stochastic_sampling(freq))
 
 
 # toki-pona-the-egg.txt
