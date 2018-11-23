@@ -85,7 +85,7 @@ def stochastic_sampling(words_dict):
     return min(words_dict, key=lambda y:abs(float(words_dict[y])-random_picker))
 
 def multiple_stochastic_sampling(words_dict):
-    # TODO: Need to test
+    # TODO: DOES NOT WORK. Needs to append total results to array. As is only picks 1 result
     total_random_picked = 0
     dict_value_totals = 0
     total_percentage = 0 
@@ -158,8 +158,9 @@ print(freq)
 
 # print(multiple_stochastic_sampling(freq))
 # print(random_word_tester(sterilized_source))
-print(stochastic_sampling(sterilized_source))
-# print(multiple_stochastic_sampling(sterilized_source))
+
+print(stochastic_sampling(freq))
+print(multiple_stochastic_sampling(freq))
 
 
 # toki-pona-the-egg.txt
