@@ -3,19 +3,18 @@ import sys
 import random
 
 def read_sterilize_source(source_text):
+    """Filters out all punctuation and white space (line breaks + spaces) using regex and
+    substitutes with a space " ". Then splits into array
+    Updated for edge cases '. Now keeps words that use ' as part of word (I've, haven't, etc.)"""
     # with open(source_text) as file:
     #     source = file.read()
-
-
-    # Filters out all punctuation and white space (line breaks + spaces) using regex and
-    # substitutes with a space " ". Then splits into array
-    # Updated for edge cases '. Now keeps words that use ' as part of word (I've, haven't, etc.)
     filtered = re.sub(r'\W*[^\'\w+\']', " ", source).split()
     return filtered
 # TODO: REFACTOR TO ACCOUNT FOR SENTENCES. IMPORTANT FOR MARKOV CHAINS
 
 
 def unique_words(filtered):
+    """Finds unique words. Intended to take in the words from read_sterilize_source results"""
     # Updated to account for uppercase letters by lowering all of them
     unique = []
     for word in filtered:
@@ -24,7 +23,7 @@ def unique_words(filtered):
     return unique
 
 def frequency(unique, filtered):
-    # Dictionary method
+    """Finds out how often each unique word is used and putting them all in a dictionary"""
     words_dict = {}
     for unique in filtered:
         if unique in words_dict:
@@ -35,6 +34,7 @@ def frequency(unique, filtered):
 
 
 def frequency_list_of_list(unique, filtered):
+    """UNUSED. Only for class assignment. Finds out how often each unique word is used and putting them all in a list"""
     listoflists = []
     for entry in unique:
         counter = 0
@@ -45,6 +45,7 @@ def frequency_list_of_list(unique, filtered):
     return listoflists
 
 def frequency_list_of_tuples(unique, filtered):
+    """UNUSED. Only for class assignment. Finds out how often each unique word is used and putting them all in a tuple"""
     listoftuples = []
     for entry in unique:
         counter = 0
@@ -72,27 +73,34 @@ def random_word_tester(words_list):
 
 def stochastic_sampling(words_dict):
     dict_value_totals = 0
+    total_percentage = 0 
+
     for value in words_dict:
         dict_value_totals += words_dict[value]
-    for key, value in words_dict:
-        key[value] = value//dict_value_totals
+    for value in words_dict:
+        new_value = words_dict[value]/dict_value_totals
+        total_percentage += new_value
+        words_dict[value] = total_percentage
+    random_picker = random.random()
+    return min(words_dict, key=lambda y:abs(float(words_dict[y])-random_picker))
+
+def multiple_stochastic_sampling(words_dict):
+    # TODO: Need to test
+    total_random_picked = 0
+    dict_value_totals = 0
+    total_percentage = 0 
+
+    while total_random_picked < 10000:
+        for value in words_dict:
+            dict_value_totals += words_dict[value]
+        for value in words_dict:
+            new_value = words_dict[value]/dict_value_totals
+            total_percentage += new_value
+            words_dict[value] = total_percentage
+        random_picker = random.random()
+        total_random_picked += 1
+        return min(words_dict, key=lambda y:abs(float(words_dict[y])-random_picker))
     
-#     fish: 4
-#     value divided by total = weight
-
-    # dict_value_totals = []
-    # for value in words_dict:
-    #     dict_value_totals.append(words_dict[value])
-    # number_total = 0
-    # for number in dict_value_totals:
-    #     number_total += number
-    # random_picker = random.randint(0, number_total)
-    # for value in words_dict:
-    #     random_picker -= words_dict[value]
-    #     if random_picker < words_dict[value]:
-    #         return value
-
-# def multiple_stochastic_sampling(words_dict):
     # dict_value_totals = []
     # for value in words_dict:
     #     dict_value_totals.append(words_dict[value])
@@ -151,6 +159,7 @@ print(freq)
 # print(multiple_stochastic_sampling(freq))
 # print(random_word_tester(sterilized_source))
 print(stochastic_sampling(sterilized_source))
+# print(multiple_stochastic_sampling(sterilized_source))
 
 
 # toki-pona-the-egg.txt
