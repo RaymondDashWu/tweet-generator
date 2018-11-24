@@ -72,6 +72,13 @@ def random_word_tester(words_list):
     return tmp_dict
 
 def stochastic_sampling(words_dict):
+    """Calculates total values of all words in dictionary, and then calculates 
+    percentages to total 100%. 
+    Ex: {'one': 1, 'fish': 4, 'two': 1, 'red': 1, 'Blue': 1, 'l': 1}
+    one: 1/9
+    fish: (1+4)/9
+    two: (1+4+1)/9
+    ..."""
     dict_value_totals = 0
     total_percentage = 0 
 
@@ -82,24 +89,34 @@ def stochastic_sampling(words_dict):
         total_percentage += new_value
         words_dict[value] = total_percentage
     random_picker = random.random()
+    # Used to pick the value closest to random.random() above
+    # Ex: if random.random() returned .1, "one" would be selected because it's closest at .11
     return min(words_dict, key=lambda y:abs(float(words_dict[y])-random_picker))
 
 def multiple_stochastic_sampling(words_dict):
-    # TODO: DOES NOT WORK. Needs to append total results to array. As is only picks 1 result
+    """Same as stochastic sampling except tested for randomness 10000x"""
+    # TODO: Works but is not random enough
+    # {'l': 541, 'red': 1140, 'one': 3345, 'fish': 2808, 'Blue': 1055, 'two': 1111}
     total_random_picked = 0
     dict_value_totals = 0
-    total_percentage = 0 
+    total_percentage = 0
+    tmp_dict = {}
 
+    for value in words_dict:
+        dict_value_totals += words_dict[value]
+    for value in words_dict:
+        new_value = words_dict[value]/dict_value_totals
+        total_percentage += new_value
+        words_dict[value] = total_percentage
     while total_random_picked < 10000:
-        for value in words_dict:
-            dict_value_totals += words_dict[value]
-        for value in words_dict:
-            new_value = words_dict[value]/dict_value_totals
-            total_percentage += new_value
-            words_dict[value] = total_percentage
         random_picker = random.random()
+        random_word = min(words_dict, key=lambda y:abs(float(words_dict[y])-random_picker))
+        if random_word in tmp_dict:
+            tmp_dict[random_word] += 1
+        else:
+            tmp_dict[random_word] = 1
         total_random_picked += 1
-        return min(words_dict, key=lambda y:abs(float(words_dict[y])-random_picker))
+    return tmp_dict
     
     # dict_value_totals = []
     # for value in words_dict:
@@ -159,7 +176,7 @@ print(freq)
 # print(multiple_stochastic_sampling(freq))
 # print(random_word_tester(sterilized_source))
 
-print(stochastic_sampling(freq))
+# print(stochastic_sampling(freq))
 print(multiple_stochastic_sampling(freq))
 
 
