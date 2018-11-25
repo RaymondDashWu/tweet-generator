@@ -19,3 +19,21 @@ def stochastic_sampling(words_dict):
     # Used to pick the value closest to random.random() above
     # Ex: if random.random() returned .1, "one" would be selected because it's closest at .11
     return min(words_dict, key=lambda y:abs(float(words_dict[y])-random_picker))
+
+def markov_chain(token_list):
+    # PSEUDO BRAINSTORM
+    # ['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish']
+    # Starts off with try, except to account for out of range error
+    # walk_steps = number of words to look forward 
+    # NOTE: DERP don't need to look for words in the back of a sentence. That's not how English works lol
+    # account for a start + end word aka START => TOKEN => WALK
+    # dictionary that keeps track of each word forward words
+    # walking: {current word, next_word += 1, next_next_word += 0,...}
+    # Put each word + transitions in individual dictionary?
+    # ex: {}
+    # Possible TODO: in future account for sets of words. Ex: next 4 words
+# https://eli.thegreenplace.net/2018/elegant-python-code-for-a-markov-chain-text-generator/
+    
+    for 
+
+def markov_chain_walk

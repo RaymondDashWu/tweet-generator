@@ -20,10 +20,20 @@ class Listogram(list):
     def add_count(self, word, count=1):
         """Increase frequency count of given word by given count amount."""
         # TODO: Increase word frequency by count
+        # ??? How does index work in this case?
+        if word in self:
+            index = self._index(word)
+            self[index] = (self[index][0], self[index][1] + count)
+        else:
+            self.append((word, count))
+            self.types += 1
+        self.tokens += count
 
     def frequency(self, word):
         """Return frequency count of given word, or 0 if word is not found."""
         # TODO: Retrieve word frequency count
+        if word in self:
+            return self._index(word)[1]
 
     def __contains__(self, word):
         """Return boolean indicating if given word is in this histogram."""
