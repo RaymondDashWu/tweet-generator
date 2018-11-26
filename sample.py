@@ -37,9 +37,17 @@ def markov_chain(token_list):
     tmp_dict = {}
     step_counter = 0
     total_steps = len(token_list)
+
     for index in range(len(token_list) - 1):
-        while step_counter < (total_steps - walk_steps):
+        while step_counter < (walk_steps + index):
             if token_list[index] not in tmp_dict:
+                # TODO: Appending the word to dictionary of dictionary tmp_dict
+                # tmp_dict[index] = 
+            elif token_list[index] in tmp_dict:
+                # Append the value in nested dictionary
+            step_counter += 1
+        step_counter = 0
+            
                 
 
 
@@ -49,30 +57,30 @@ def markov_chain(token_list):
 
         
 
-
+# TODO: Once Markov chain populated pick word after word
 
 
 
 
 
 # https://eli.thegreenplace.net/2018/elegant-python-code-for-a-markov-chain-text-generator/
-    walk_steps = 4 # Arbitrary number 4 for now. Looks at next 4 words after.
-    test_dict = {}
+    # walk_steps = 4 # Arbitrary number 4 for now. Looks at next 4 words after.
+    # test_dict = {}
     
-    for i in range(len(token_list) - walk_steps):
-        current_word = 
-        test_dict[]
+    # for i in range(len(token_list) - walk_steps):
+    #     current_word = 
+    #     test_dict[]
 
-if word in self:
-            self[word] += count
-        else:
-            self[word] = count
-            self.types += 1
-        self.tokens += count
+# if word in self:
+#             self[word] += count
+#         else:
+#             self[word] = count
+#             self.types += 1
+#         self.tokens += count
 
-        # freq
-                return self.get(word, 0)
+#         # freq
+#                 return self.get(word, 0)
 
 
-
-def markov_chain_walk
+# Don't know if this function is required yet
+# def markov_chain_walk()
