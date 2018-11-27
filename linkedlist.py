@@ -56,18 +56,30 @@ class LinkedList(object):
         """Return the length of this linked list by traversing its nodes.
         TODO: Running time: O(???) Why and under what conditions?"""
         # TODO: Loop through all nodes and count one for each
+        count = 0
+        for node in self.data:
+            count += 1
+        return count
 
     def append(self, item):
         """Insert the given item at the tail of this linked list.
         TODO: Running time: O(???) Why and under what conditions?"""
         # TODO: Create new node to hold given item
         # TODO: Append node after tail, if it exists
+        self.append(item)
+
+
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
         TODO: Running time: O(???) Why and under what conditions?"""
         # TODO: Create new node to hold given item
         # TODO: Prepend node before head, if it exists
+        # PSEUDO BRAINSTORM:
+        # 1) (? unsure if needed step) Create room to the right 
+        # 2) Shift all items before tail over 1 to the right
+        # 3) ????
+        # 4) Profit
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.

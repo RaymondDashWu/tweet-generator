@@ -26,36 +26,49 @@ def markov_chain(token_list):
     # PSEUDO BRAINSTORM
     # NOTE: DERP don't need to look for words in the back of a sentence. That's not how English works lol
     # ['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish']
-    iterate through each word while looking 4 ahead. lookahead arbitrary
+    # iterate through each word while looking 4 ahead. lookahead arbitrary
     # walk_steps = number of words to look forward 
     # account for a start + end word aka START => TOKEN => WALK
     # NOTE: NESTED dictionary that keeps track of each forward words
     # nested dict format: {current word: {next_word = 1, next_next_word = 0,...}}
     # Put each word + transitions in individual dictionary?
     # weighted random selection
-    walk_steps = 4
-    tmp_dict = {}
+    walk_steps = 1
+    nest_dict = {}
     step_counter = 0
     total_steps = len(token_list)
 
-    for index in range(len(token_list) - 1):
-        while step_counter < (walk_steps + index):
-            if token_list[index] not in tmp_dict:
+    for i in range(total_steps - 1):
+        while step_counter < (walk_steps):
+            if token_list[i] not in nest_dict:
+                tmp_dict = {}
+                # token_list[i] = {tmp_dict[token_list[i]]: 1}
+                tmp_dict[token_list[i+1]] = 1
                 # TODO: Appending the word to dictionary of dictionary tmp_dict
                 # tmp_dict[index] = 
-            elif token_list[index] in tmp_dict:
+                nest_dict[token_list[i]] = tmp_dict
+            elif token_list[i] in nest_dict:
                 # Append the value in nested dictionary
+                # you might want another tmp_dict
+                # hold on to the value of that word
+                # figure out how to increment the value of the tmp_dict
+                tmp_dict = {}
+                print(nest_dict[token_list[i]])
+                tmp_dict = nest_dict[token_list[i]] += 1
+                # tmp_dict[token_list[nest_dict[i]]] += 1
             step_counter += 1
         step_counter = 0
+        print(nest_dict)
             
                 
 
 
-    for word in token_list:
-        if index in range(len(token_list) - walk_steps):
-            print("hello")
+    # for word in token_list:
+    #     if index in range(len(token_list) - walk_steps):
+    #         print("hello")
 
-        
+if __name__ == '__main__':
+  markov_chain(['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish'])             
 
 # TODO: Once Markov chain populated pick word after word
 
