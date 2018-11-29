@@ -18,7 +18,7 @@ def stochastic_sampling(words_dict):
         tmp_dict[value] = total_percentage
         random_picker = random.random()
     for value in tmp_dict:
-        if tmp_dict[value] <= random_picker:
+        if tmp_dict[value] >= random_picker:
             return value
 
 def markov_chain(token_list):
