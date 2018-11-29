@@ -7,18 +7,19 @@ def stochastic_sampling(words_dict):
     two: (1+4+1)/9
     ..."""
     dict_value_totals = 0
-    total_percentage = 0 
+    total_percentage = 0
+    tmp_dict = {}
 
     for value in words_dict:
         dict_value_totals += words_dict[value]
     for value in words_dict:
         new_value = words_dict[value]/dict_value_totals
         total_percentage += new_value
-        words_dict[value] = total_percentage
-    random_picker = random.random()
-    # Used to pick the value closest to random.random() above
-    # Ex: if random.random() returned .1, "one" would be selected because it's closest at .11
-    return min(words_dict, key=lambda y:abs(float(words_dict[y])-random_picker))
+        tmp_dict[value] = total_percentage
+        random_picker = random.random()
+    for value in tmp_dict:
+        if tmp_dict[value] <= random_picker:
+            return value
 
 def markov_chain(token_list):
     """Returns a data structure of word A followed by word B in a nested dictionary.

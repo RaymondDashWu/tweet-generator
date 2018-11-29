@@ -80,16 +80,18 @@ def stochastic_sampling(words_dict):
     two: (1+4+1)/9
     ..."""
     dict_value_totals = 0
-    total_percentage = 0 
+    total_percentage = 0
+    tmp_dict = {}
 
     for value in words_dict:
         dict_value_totals += words_dict[value]
     for value in words_dict:
         new_value = words_dict[value]/dict_value_totals
         total_percentage += new_value
-        words_dict[value] = total_percentage
+        tmp_dict[value] = total_percentage
         random_picker = random.random()
-        if words_dict[value] <= random_picker:
+    for value in tmp_dict:
+        if tmp_dict[value] <= random_picker:
             return value
 
 def multiple_stochastic_sampling(words_dict):
@@ -99,6 +101,7 @@ def multiple_stochastic_sampling(words_dict):
     total_random_picked = 0
     dict_value_totals = 0
     total_percentage = 0
+    tmp_percent_dict = {}
     tmp_dict = {}
 
     # TO FIX: DOES NOT WORK
@@ -108,15 +111,17 @@ def multiple_stochastic_sampling(words_dict):
         for value in words_dict:
             new_value = words_dict[value]/dict_value_totals
             total_percentage += new_value
-            words_dict[value] = total_percentage
+            tmp_percent_dict[value] = total_percentage
             random_picker = random.random()
             # check to see if the value even exists first
+        for value in tmp_percent_dict:
             if value not in tmp_dict:
+                tmp_dict[value] = 1
+            else:
                 if words_dict[value] <= random_picker:
                     tmp_dict[value] += 1
-                else:
-                    tmp_dict[value] = 1
         total_random_picked += 1
+        # print(total_random_picked) WORKS.
     return tmp_dict
     # while total_random_picked < 10000:
     #     random_picker = random.random()
