@@ -49,7 +49,8 @@ def markov_chain(token_list):
         step_counter = 0
         print(nest_dict)
             
-def markov_chain_walk()
+def markov_chain_walk():
+    
 
 if __name__ == '__main__':
   markov_chain(['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish', 'two', 'fish'])             

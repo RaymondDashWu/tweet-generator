@@ -88,10 +88,9 @@ def stochastic_sampling(words_dict):
         new_value = words_dict[value]/dict_value_totals
         total_percentage += new_value
         words_dict[value] = total_percentage
-    random_picker = random.random()
-    # Used to pick the value closest to random.random() above
-    # Ex: if random.random() returned .1, "one" would be selected because it's closest at .11
-    return min(words_dict, key=lambda y:abs(float(words_dict[y])-random_picker))
+        random_picker = random.random()
+        if words_dict[value] <= random_picker:
+            return value
 
 def multiple_stochastic_sampling(words_dict):
     """Same as stochastic sampling except tested for randomness 10000x"""
@@ -102,21 +101,32 @@ def multiple_stochastic_sampling(words_dict):
     total_percentage = 0
     tmp_dict = {}
 
-    for value in words_dict:
-        dict_value_totals += words_dict[value]
-    for value in words_dict:
-        new_value = words_dict[value]/dict_value_totals
-        total_percentage += new_value
-        words_dict[value] = total_percentage
+    # TO FIX: DOES NOT WORK
     while total_random_picked < 10000:
-        random_picker = random.random()
-        random_word = min(words_dict, key=lambda y:abs(float(words_dict[y])-random_picker))
-        if random_word in tmp_dict:
-            tmp_dict[random_word] += 1
-        else:
-            tmp_dict[random_word] = 1
+        for value in words_dict:
+            dict_value_totals += words_dict[value]
+        for value in words_dict:
+            new_value = words_dict[value]/dict_value_totals
+            total_percentage += new_value
+            words_dict[value] = total_percentage
+            random_picker = random.random()
+            # check to see if the value even exists first
+            if value not in tmp_dict:
+                if words_dict[value] <= random_picker:
+                    tmp_dict[value] += 1
+                else:
+                    tmp_dict[value] = 1
         total_random_picked += 1
     return tmp_dict
+    # while total_random_picked < 10000:
+    #     random_picker = random.random()
+    #     random_word = min(words_dict, key=lambda y:abs(float(words_dict[y])-random_picker))
+    #     if random_word in tmp_dict:
+    #         tmp_dict[random_word] += 1
+    #     else:
+    #         tmp_dict[random_word] = 1
+    #     total_random_picked += 1
+    # return tmp_dict
     
     # dict_value_totals = []
     # for value in words_dict:
