@@ -48,13 +48,16 @@ def markov_chain(token_list):
                     nest_dict[token_list[i]][token_list[i + 1]] = 1
             step_counter += 1
         step_counter = 0
-        print(nest_dict)
+    return nest_dict
             
 def markov_chain_walk():
-    
+    # PSEUDO BRAINSTORM
+    # start off with first word. HEAD of the sentence
+    # pick random word in dictionary | one => fish
+    # migrate to fish dictionary. Pick random word from there, repeat last step
 
 if __name__ == '__main__':
-  markov_chain(['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish', 'two', 'fish'])             
+    print(markov_chain(['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish', 'two', 'fish']))             
 
 # TODO: Once Markov chain populated pick word after word
 
