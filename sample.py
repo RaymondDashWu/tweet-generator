@@ -1,4 +1,9 @@
-def stochastic_sampling(words_dict):
+from pprint import pprint
+from histogram import pick_random_word
+import random
+
+
+def stochastic_sample(words_dict):
     """Calculates total values of all words in dictionary, and then calculates 
     percentages to total 100%. 
     Ex: {'one': 1, 'fish': 4, 'two': 1, 'red': 1, 'Blue': 1, 'l': 1}
@@ -50,19 +55,68 @@ def markov_chain(token_list):
         step_counter = 0
     return nest_dict
             
-def markov_chain_walk():
+def markov_chain_walk(chain):
     # PSEUDO BRAINSTORM
-    # start off with first word. HEAD of the sentence
+    # chain = {
+    #  'blue': {'fish': 1},
+    #  'fish': {'blue': 1, 'red': 1, 'two': 2},
+    #  'one': {'fish': 1},
+    #  'red': {'fish': 1},
+    #  'two': {'fish': 2}
+    # }
+    # 1: start off with first word. Start of the sentence
+    word_types = list(chain.keys())
+    print('word_types:', word_types)
+    # start_word = pick_random_word(word_types)
+    start_word = 'one'
+    print('start_word:', start_word)
+    # TODO:
+    words_picked_list = [start_word]
+    # current_word = start_word
+
     # pick random word in dictionary | one => fish
+    # given the start word, get all possible next words in a histogram
+    # TODO: PUT INTO FOR LOOP
+    possible_current_words = chain[start_word]
+    # given histogram, pick one word at random based on frequency
+    current_word = stochastic_sample(possible_current_words)
+    print('current_word:', current_word)
+
+    words_picked_list.append(current_word)
+
+    # given current_word ('fish'), get all possible next words in a histogram
+    pick_next_word = chain[current_word]
+    # pick next_word after fish
+    next_word = stochastic_sample(pick_next_word)
+    print('next_word:', next_word)
+    # TODO: END FOR LOOP
+
+    return words_picked_list
     # migrate to fish dictionary. Pick random word from there, repeat last step
+    # How to end? Randomly pick a fish point to end on? How does it select that end point?
+    # NOTE: Possibly overthinking it. Use markov chain to make data structure and then pick with
+    # stochastic sampling? How to end?
+
+
 
 if __name__ == '__main__':
-    print(markov_chain(['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish', 'two', 'fish']))             
+    # 1: Get a list of tokens from a sentence or file
+    words = "one fish two fish red fish blue fish two fish".split()
+    # words = ['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish', 'two', 'fish']
 
-# TODO: Once Markov chain populated pick word after word
+    # 2: Create the Markov chain structure from the list of tokens
+    chain = markov_chain(words)
+    pprint(chain)
+    # print(type(chain))
 
+    # 3: Walk the Markov chain to get a list of words in the generated sentence
+    sentence_list = markov_chain_walk(chain)
+    print('sentence_list:', sentence_list)
 
-
+    # 4: Turn the list of words into a printable sentence
+    # Execute 10x. Don't worry about how to find end of sentence
+    # sentence = ...
+    # print(sentence)
 
 
 # https://eli.thegreenplace.net/2018/elegant-python-code-for-a-markov-chain-text-generator/

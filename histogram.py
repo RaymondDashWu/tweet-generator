@@ -113,7 +113,7 @@ def multiple_stochastic_sampling(words_dict):
     return tmp_dict
 
 if __name__ == "__main__":
-    with open("text-corpus.txt", "r") as file:
+    with open("fish.txt", "r") as file:
         source = file.read()
     # removes symbols, punctuation, etc. from source text and puts in array
     sterilized_source = read_sterilize_source(source)
@@ -132,7 +132,7 @@ if __name__ == "__main__":
     #     if destination < 0:
     #         return word
     # return filtered[random.randint(0,len(filtered) - 1)]
-
+"""
 # one fish two fish blue fish red fish
 clean_txt_list = read_sterilize_source("text-corpus.txt")
 print(clean_txt_list)
@@ -151,3 +151,4 @@ print(multiple_stochastic_sampling(freq))
 
 # toki-pona-the-egg.txt
 # print(frequency(unique_words("toki-pona-the-egg.txt"),read_sterilize_source("toki-pona-the-egg.txt")))
+"""
