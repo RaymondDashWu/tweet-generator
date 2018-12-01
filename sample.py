@@ -56,48 +56,18 @@ def markov_chain(token_list):
     return nest_dict
             
 def markov_chain_walk(chain):
-    # PSEUDO BRAINSTORM
-    # chain = {
-    #  'blue': {'fish': 1},
-    #  'fish': {'blue': 1, 'red': 1, 'two': 2},
-    #  'one': {'fish': 1},
-    #  'red': {'fish': 1},
-    #  'two': {'fish': 2}
-    # }
-    # 1: start off with first word. Start of the sentence
-    word_types = list(chain.keys())
-    print('word_types:', word_types)
-    # start_word = pick_random_word(word_types)
     start_word = 'one'
-    print('start_word:', start_word)
-    # TODO:
+    total_words_picked = 0
     words_picked_list = [start_word]
-    # current_word = start_word
 
-    # pick random word in dictionary | one => fish
-    # given the start word, get all possible next words in a histogram
-    # TODO: PUT INTO FOR LOOP
-    possible_current_words = chain[start_word]
-    # given histogram, pick one word at random based on frequency
-    current_word = stochastic_sample(possible_current_words)
-    print('current_word:', current_word)
-
-    words_picked_list.append(current_word)
-
-    # given current_word ('fish'), get all possible next words in a histogram
-    pick_next_word = chain[current_word]
-    # pick next_word after fish
-    next_word = stochastic_sample(pick_next_word)
-    print('next_word:', next_word)
-    # TODO: END FOR LOOP
-
+    while total_words_picked < 10:
+        possible_current_words = chain[start_word]
+            # given histogram, pick one word at random based on frequency
+        start_word = stochastic_sample(possible_current_words)
+        # print('current_word:', current_word)
+        words_picked_list.append(start_word)
+        total_words_picked += 1
     return words_picked_list
-    # migrate to fish dictionary. Pick random word from there, repeat last step
-    # How to end? Randomly pick a fish point to end on? How does it select that end point?
-    # NOTE: Possibly overthinking it. Use markov chain to make data structure and then pick with
-    # stochastic sampling? How to end?
-
-
 
 if __name__ == '__main__':
     # 1: Get a list of tokens from a sentence or file
