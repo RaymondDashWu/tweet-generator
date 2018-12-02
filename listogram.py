@@ -29,6 +29,10 @@ class Listogram(list):
 
     def frequency(self, word):
         """Return frequency count of given word, or 0 if word is not found."""
+        if word in self:
+            return self[word][1]
+        else:
+            return 0
         # TODO: Retrieve word frequency count
 
     def __contains__(self, word):
