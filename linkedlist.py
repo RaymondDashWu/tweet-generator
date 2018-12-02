@@ -59,20 +59,36 @@ class LinkedList(object):
         O(N) if looping through all of the nodes
         O(1) if returning the value of the size property"""
         # TODO: Loop through all nodes and count one for each
+        # ??? how does this work?
         return self.size
 
 
     def append(self, item):
         """Insert the given item at the tail of this linked list.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        TODO: Running time: O(???) Why and under what conditions?
+        O(1) if pointing to the new node and then appending to it"""
         # TODO: Create new node to hold given item
         # TODO: Append node after tail, if it exists
+        new_node = Node(item)
+        if self.tail is None:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            self.tail = new_node
+            self.tail.next = new_node
+        self.size += 1
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
         TODO: Running time: O(???) Why and under what conditions?"""
         # TODO: Create new node to hold given item
         # TODO: Prepend node before head, if it exists
+        new_node = Node(item)
+        if self.tail is None:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            self.tail = 
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
