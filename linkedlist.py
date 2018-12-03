@@ -66,11 +66,12 @@ class LinkedList(object):
     def append(self, item):
         """Insert the given item at the tail of this linked list.
         TODO: Running time: O(???) Why and under what conditions?
-        O(1) if pointing to the new node and then appending to it"""
+        O(1) if pointing to the new node and then appending to it
+        O(N) if iterating through all nodes to find tail that is None"""
         # TODO: Create new node to hold given item
         # TODO: Append node after tail, if it exists
         new_node = Node(item)
-        if self.tail is None:
+        if self.head is None:
             self.head = new_node
             self.tail = new_node
         else:
@@ -80,31 +81,51 @@ class LinkedList(object):
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        TODO: Running time: O(???) Why and under what conditions?
+        O(1) if inserting a new node and pointing head(?)
+        O(N) if adding head and then shifting everything afterwards over """
         # TODO: Create new node to hold given item
         # TODO: Prepend node before head, if it exists
         new_node = Node(item)
-        if self.tail is None:
+        if self.is_empty():
             self.head = new_node
             self.tail = new_node
         else:
-            self.tail = 
+            self.head.next = new_node
+            self.head = new_node
+        self.size += 1
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
         TODO: Best case running time: O(???) Why and under what conditions?
-        TODO: Worst case running time: O(???) Why and under what conditions?"""
+        O(1) if the item being looked for is the FIRST item in the list
+        TODO: Worst case running time: O(???) Why and under what conditions?
+        O(N) if the item being looked for is the LAST item in the list"""
         # TODO: Loop through all nodes to find item where quality(item) is True
         # TODO: Check if node's data satisfies given quality function
+        # UNTESTED
+        for node in self:
+            if node == quality:
+                return True
+            else:
+                continue
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
         TODO: Best case running time: O(???) Why and under what conditions?
-        TODO: Worst case running time: O(???) Why and under what conditions?"""
+        O(1) if the item being looked for is the FIRST item in the list
+        TODO: Worst case running time: O(???) Why and under what conditions?
+        O(N) if the item being looked for is the LAST item in the list"""
         # TODO: Loop through all nodes to find one whose data matches given item
         # TODO: Update previous node to skip around node with matching data
+        # ???
         # TODO: Otherwise raise error to tell user that delete has failed
         # Hint: raise ValueError('Item not found: {}'.format(item))
+        for node in self:
+            if node == item:
+
+            else:
+                raise ValueError('Item not found: {}'.format(item))
 
 
 def test_linked_list():

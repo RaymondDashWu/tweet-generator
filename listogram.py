@@ -2,7 +2,6 @@
 
 from __future__ import division, print_function  # Python 2 and 3 compatibility
 
-
 class Listogram(list):
     """Listogram is a histogram implemented as a subclass of the list type."""
 
@@ -20,20 +19,27 @@ class Listogram(list):
     def add_count(self, word, count=1):
         """Increase frequency count of given word by given count amount."""
         # TODO: Increase word frequency by count
-        if word in self:
-            word += count
-        else:
-            count = 1
-        self.append([word, count])
 
+        # TOFIX: Currently iterating through all list elements. 
+        # However, does not update identical elements. 
+        # Instead repeats them in new list element
+        if word in self:
+            self[word] += count
+        else:
+            self.types += 1
+            tmp_counter = 1
+        self.tokens += 1
+        self.append([word, tmp_counter])
 
     def frequency(self, word):
         """Return frequency count of given word, or 0 if word is not found."""
+        # TODO: Retrieve word frequency count
+        print("self: LOOK HERE",self)
+        # TOFIX: Untested. Need add_count to work first
         if word in self:
-            return self[word][1]
+            return self[word][0]
         else:
             return 0
-        # TODO: Retrieve word frequency count
 
     def __contains__(self, word):
         """Return boolean indicating if given word is in this histogram."""
