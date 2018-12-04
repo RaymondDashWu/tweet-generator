@@ -11,35 +11,28 @@ class Listogram(list):
         # Add properties to track useful word counts for this histogram
         self.types = 0  # Count of distinct word types in this histogram
         self.tokens = 0  # Total count of all word tokens in this histogram
+        self.list_of_list = []
         # Count words in given list, if any
         if word_list is not None:
             for word in word_list:
                 self.add_count(word)
+        print("self.list_of_list:",self.list_of_list)
 
     def add_count(self, word, count=1):
         """Increase frequency count of given word by given count amount."""
         # TODO: Increase word frequency by count
-
-        # TOFIX: Currently iterating through all list elements. 
-        # However, does not update identical elements. 
-        # Instead repeats them in new list element
-        if word in self:
-            self[word] += count
-        else:
-            self.types += 1
-            tmp_counter = 1
-        self.tokens += 1
-        self.append([word, tmp_counter])
+        wordfound = False
+        for token in self.list_of_list:
+            if word == token[0]:
+                wordfound = True
+                token[1] += count
+        if wordfound == False:
+            self.list_of_list.append([word, count])
 
     def frequency(self, word):
         """Return frequency count of given word, or 0 if word is not found."""
         # TODO: Retrieve word frequency count
-        print("self: LOOK HERE",self)
-        # TOFIX: Untested. Need add_count to work first
-        if word in self:
-            return self[word][0]
-        else:
-            return 0
+        # return self.list_of_list[]
 
     def __contains__(self, word):
         """Return boolean indicating if given word is in this histogram."""
@@ -49,7 +42,12 @@ class Listogram(list):
         """Return the index of entry containing given target word if found in
         this histogram, or None if target word is not found."""
         # TODO: Implement linear search to find index of entry with target word
-
+        wordfound = False
+        for token in self.list_of_list:
+            if target == token[0]:
+                wordfound = True
+        # if wordfound == False:
+        #     self.list_of_list.append([word, count])
 
 def print_histogram(word_list):
     print('word list: {}'.format(word_list))

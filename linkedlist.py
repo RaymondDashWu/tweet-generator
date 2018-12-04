@@ -118,7 +118,7 @@ class LinkedList(object):
         O(N) if the item being looked for is the LAST item in the list"""
         # TODO: Loop through all nodes to find one whose data matches given item
         # TODO: Update previous node to skip around node with matching data
-        # ???
+        # ??? What does update previous node mean?
         # TODO: Otherwise raise error to tell user that delete has failed
         # Hint: raise ValueError('Item not found: {}'.format(item))
         for node in self:
