@@ -28,11 +28,19 @@ class Listogram(list):
                 token[1] += count
         if wordfound == False:
             self.list_of_list.append([word, count])
+            self.types += 1
+        self.tokens += 1
 
     def frequency(self, word):
         """Return frequency count of given word, or 0 if word is not found."""
         # TODO: Retrieve word frequency count
-        # return self.list_of_list[]
+        wordfound = False
+        for token in self.list_of_list:
+            if word == token[0]:
+                wordfound = True
+                return token[1]
+        if wordfound == False:
+            return 0
 
     def __contains__(self, word):
         """Return boolean indicating if given word is in this histogram."""
@@ -42,10 +50,15 @@ class Listogram(list):
         """Return the index of entry containing given target word if found in
         this histogram, or None if target word is not found."""
         # TODO: Implement linear search to find index of entry with target word
+        
+        
+        
         wordfound = False
         for token in self.list_of_list:
             if target == token[0]:
                 wordfound = True
+            else:
+                return None
         # if wordfound == False:
         #     self.list_of_list.append([word, count])
 
