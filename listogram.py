@@ -45,13 +45,16 @@ class Listogram(list):
     def __contains__(self, word):
         """Return boolean indicating if given word is in this histogram."""
         # TODO: Check if word is in this histogram
+        wordfound = False
+        for token in self.list_of_list:
+            if word == token[0]:
+                wordfound = True
+                return True
 
     def _index(self, target):
         """Return the index of entry containing given target word if found in
         this histogram, or None if target word is not found."""
         # TODO: Implement linear search to find index of entry with target word
-        
-        
         
         wordfound = False
         for token in self.list_of_list:
