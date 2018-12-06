@@ -114,17 +114,14 @@ class LinkedList(object):
         # current = current.next
         # return None
 
-        
-        head_node = self.head
+        current_node = self.head
         if self.head is not None:
             # This line is possibly wrong. Takes in self in length function
-            for node in length(self):
-                if node == quality:
-                    return node.data
+            for _ in length(self):
+                if current_node == quality:
+                    return current_node.data
                 else:
-                    node = node.next
-
-
+                    current_node = current_node.next
 
         # for node in self:
         #     if node == quality:
