@@ -104,30 +104,13 @@ class LinkedList(object):
         O(N) if the item being looked for is the LAST item in the list"""
         # TODO: Loop through all nodes to find item where quality(item) is True
         # TODO: Check if node's data satisfies given quality function
-        
-        # PSEUDO BRAINSTORM
-        # Check if self.head contains something
-        # iterate for ??? in length of linked list
-        # if ??? == quality:
-        # return current.data
-        # else:
-        # current = current.next
-        # return None
-
         current_node = self.head
         if self.head is not None:
-            # This line is possibly wrong. Takes in self in length function
-            for _ in length(self):
-                if current_node == quality:
+            for _ in range(self.length()):
+                if quality(current_node.data) == True:
                     return current_node.data
                 else:
                     current_node = current_node.next
-
-        # for node in self:
-        #     if node == quality:
-        #         return current.data
-        #     else:
-        #         continue
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
@@ -170,13 +153,15 @@ def test_linked_list():
         print('append({!r})'.format(item))
         ll.append(item)
         print('list: {}'.format(ll))
+        print("quality:",ll.find(quality))
+
 
     print('head: {}'.format(ll.head))
     print('tail: {}'.format(ll.tail))
     print('length: {}'.format(ll.length()))
 
     # Enable this after implementing delete method
-    delete_implemented = True
+    delete_implemented = False
     if delete_implemented:
         print('\nTesting delete:')
         for item in ['B', 'C', 'A']:
