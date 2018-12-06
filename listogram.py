@@ -29,21 +29,8 @@ class Listogram(list):
                 token[1] += count
         if wordfound == False:
             self.list_of_list.append([word, count])
-            # TOASK: Why didn't this work with += count?
             self.types += 1
         self.tokens += count  
-         
-        # wordfound = False   
-        # for _list in self:
-        #     if _list[0] == word and not wordfound:
-        #         list_count = _list[1] + count
-        #         self.append([word, list_count])
-        #         wordfound = True
-        #         self.tokens += count
-        #     if not wordfound:
-        #         self.append([word, count])
-        #         self.tokens += count
-        #         self.types += 1
 
     def frequency(self, word):
         """Return frequency count of given word, or 0 if word is not found."""

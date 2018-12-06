@@ -21,6 +21,7 @@ class ListogramTest(unittest.TestCase):
         # you should modify the fish_list fixture above and/or this test (only)
         listogram = Listogram(self.fish_words)
         # Verify histogram as list of entries like [(word, count)]
+        print("listogram:",listogram)
         assert len(listogram) == 5
         assert listogram == self.fish_list
         self.assertCountEqual(listogram, self.fish_list)  # Ignore item order

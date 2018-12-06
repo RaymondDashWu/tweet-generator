@@ -7,6 +7,7 @@ class Node(object):
         """Initialize this node with the given data."""
         self.data = data
         self.next = None
+        self.prev = None
 
     def __repr__(self):
         """Return a string representation of this node."""
@@ -71,12 +72,12 @@ class LinkedList(object):
         # TODO: Create new node to hold given item
         # TODO: Append node after tail, if it exists
         new_node = Node(item)
-        if self.head is None:
+        if self.tail is None:
             self.head = new_node
             self.tail = new_node
         else:
-            self.tail = new_node
             self.tail.next = new_node
+            self.tail = new_node
         self.size += 1
 
     def prepend(self, item):
@@ -103,7 +104,6 @@ class LinkedList(object):
         O(N) if the item being looked for is the LAST item in the list"""
         # TODO: Loop through all nodes to find item where quality(item) is True
         # TODO: Check if node's data satisfies given quality function
-        # UNTESTED
         for node in self:
             if node == quality:
                 return True
@@ -121,9 +121,22 @@ class LinkedList(object):
         # ??? What does update previous node mean?
         # TODO: Otherwise raise error to tell user that delete has failed
         # Hint: raise ValueError('Item not found: {}'.format(item))
-        for node in self:
-            if node == item:
 
+        # PSEUDO BRAINSTORM
+        # iterate through nodes to find a match
+        # if match found keep track of previous node
+        # point previous node to next node after matched word
+        if self.is_empty():
+            raise ValueError("Linked list is empty")
+
+        # after found set previous.next to current.next
+        while current is not None:
+            # can not match a node with item. Rubik's cube example
+            if current.data == item:
+                self.head = current.prev
+                self.tail = current.next
+                # current.prev = self.prev #previous node... How to set?
+                # current.next = self.next #node after matched one...
             else:
                 raise ValueError('Item not found: {}'.format(item))
 
@@ -143,7 +156,7 @@ def test_linked_list():
     print('length: {}'.format(ll.length()))
 
     # Enable this after implementing delete method
-    delete_implemented = False
+    delete_implemented = True
     if delete_implemented:
         print('\nTesting delete:')
         for item in ['B', 'C', 'A']:
