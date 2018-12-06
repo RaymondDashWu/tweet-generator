@@ -104,11 +104,33 @@ class LinkedList(object):
         O(N) if the item being looked for is the LAST item in the list"""
         # TODO: Loop through all nodes to find item where quality(item) is True
         # TODO: Check if node's data satisfies given quality function
-        for node in self:
-            if node == quality:
-                return True
-            else:
-                continue
+        
+        # PSEUDO BRAINSTORM
+        # Check if self.head contains something
+        # iterate for ??? in length of linked list
+        # if ??? == quality:
+        # return current.data
+        # else:
+        # current = current.next
+        # return None
+
+        
+        head_node = self.head
+        if self.head is not None:
+            # This line is possibly wrong. Takes in self in length function
+            for node in length(self):
+                if node == quality:
+                    return node.data
+                else:
+                    node = node.next
+
+
+
+        # for node in self:
+        #     if node == quality:
+        #         return current.data
+        #     else:
+        #         continue
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
@@ -130,10 +152,11 @@ class LinkedList(object):
             raise ValueError("Linked list is empty")
 
         # after found set previous.next to current.next
+        # current = self.head BREAKS CODE ATM. Not this line specifically but something below 
         while current is not None:
             # can not match a node with item. Rubik's cube example
             if current.data == item:
-                self.head = current.prev
+                self.head = current.prev # can't work if this is the first instance
                 self.tail = current.next
                 # current.prev = self.prev #previous node... How to set?
                 # current.next = self.next #node after matched one...
