@@ -132,16 +132,49 @@ class LinkedList(object):
             raise ValueError("Linked list is empty")
 
         # after found set previous.next to current.next
-        # current = self.head BREAKS CODE ATM. Not this line specifically but something below 
-        while current is not None:
-            # can not match a node with item. Rubik's cube example
-            if current.data == item:
-                self.head = current.prev # can't work if this is the first instance
-                self.tail = current.next
-                # current.prev = self.prev #previous node... How to set?
-                # current.next = self.next #node after matched one...
+        current_node = self.head
+        found = False
+        while current_node is not None:
+            # TODO: check strings for strings, objects for objects
+            if current_node.data == item: 
+                found = True
+                if current_node.prev == None:
+                    self.head = current_node.next
+                    current_node.next.prev = None
+                    current_node.next = None
+                    found = True
+                elif (current_node.next == None) and (current_node.prev == None):
+                    current_node = None
+                elif current_node.next == None:
+                    self.tail = current_node.prev
+                    current_node.prev.next = None
+                    current_node.prev = None
+                else:  
+                    current_node.prev.next = current_node.next #setting the pointer to previous, ignoring current_node
+                    current_node.next.prev = current_node.prev
+                    current_node.prev = None
+                    current_node.next = None
+                    found = True
+                # self.head = current.next
             else:
-                raise ValueError('Item not found: {}'.format(item))
+                current_node = current_node.next
+        if found == True:
+            self.size -= 1
+        else:
+            raise ValueError('Item not found: {}'.format(item)) 
+        # IF IT"S NOT IN THERE EDGE CASE
+
+
+
+
+            # # can not match a node with item. Rubik's cube example            
+            # if current.data == item:
+            #     self.head = current.prev # can't work if this is the first instance
+            #     self.tail = current.next
+            #     # current.prev = self.prev #previous node... How to set?
+            #     # current.next = self.next #node after matched one...
+            # else:
+            #     raise ValueError('Item not found: {}'.format(item))
 
 
 def test_linked_list():
@@ -153,7 +186,6 @@ def test_linked_list():
         print('append({!r})'.format(item))
         ll.append(item)
         print('list: {}'.format(ll))
-        print("quality:",ll.find(quality))
 
 
     print('head: {}'.format(ll.head))
@@ -161,7 +193,7 @@ def test_linked_list():
     print('length: {}'.format(ll.length()))
 
     # Enable this after implementing delete method
-    delete_implemented = False
+    delete_implemented = True
     if delete_implemented:
         print('\nTesting delete:')
         for item in ['B', 'C', 'A']:
