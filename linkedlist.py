@@ -134,34 +134,85 @@ class LinkedList(object):
         # after found set previous.next to current.next
         current_node = self.head
         found = False
-        while current_node is not None:
-            # TODO: check strings for strings, objects for objects
+        while current_node is not None and self.size > 1:
             if current_node.data == item: 
-                found = True
-                if current_node.prev == None:
+                # if (current_node.prev == None) and (current_node.next == None):
+                # if self.size == 1:
+                #     self.head = None
+                #     self.tail = None
+                # PSEUDO: if item being looked for is first in list
+                # if current_node.prev is None:
+                if current_node is self.head:
                     self.head = current_node.next
-                    current_node.next.prev = None
+                    self.head.prev = None
                     current_node.next = None
-                    found = True
-                elif (current_node.next == None) and (current_node.prev == None):
-                    current_node = None
-                elif current_node.next == None:
+                # PSEUDO: if item being searched for is last in linked list
+                # elif current_node.next == None:
+                elif current_node is self.tail:
+                    print("self.tail:",self.tail)
+                    print("current_node:",current_node)
+                    print("current_node.prev",current_node.prev)
+                    print("current_node.next",current_node.next)
+                    print("current_node.prev.next",current_node.prev.next)
+                    # current_node.next.next.prev = current_node
                     self.tail = current_node.prev
+                    self.tail.next = None
                     current_node.prev.next = None
-                    current_node.prev = None
-                else:  
-                    current_node.prev.next = current_node.next #setting the pointer to previous, ignoring current_node
-                    current_node.next.prev = current_node.prev
-                    current_node.prev = None
-                    current_node.next = None
-                    found = True
-                # self.head = current.next
-            else:
-                current_node = current_node.next
+                    current_node.next.next.prev = current_node
+
+                else:
+                    current_node.prev.next = current_node.next
+                    current_node.prev.next = current_node.next
+                    # current_node.next.prev = None
+                    # current_node.prev.next = None  
+                    # current_node.next = None
+                    # current_node.prev = None
+       
+                found = True
+                # break
+            current_node = current_node.next
+            # current_node = current_node.prev
+            # else:
+            #     current_node = current_node.next
         if found == True:
             self.size -= 1
         else:
             raise ValueError('Item not found: {}'.format(item)) 
+
+
+
+
+
+
+
+
+
+
+                # if current_node.prev == None:
+                #     self.head = current_node.next
+                #     current_node.next.prev = None
+                #     current_node.next = None
+                #     current_node = current_node.next
+                #     found = True
+                # elif (current_node.next == None) and (current_node.prev == None):
+                #     current_node = None
+                # elif current_node.next == None:
+                #     self.tail = current_node.prev
+                #     current_node.prev.next = None
+                #     current_node.prev = None
+                # else:  
+                #     current_node.prev.next = current_node.next #setting the pointer to previous, ignoring current_node
+                #     current_node.next.prev = current_node.prev
+                #     current_node.prev = None
+                #     current_node.next = None
+                #     found = True
+                # self.head = current.next
+            # else:
+            #     current_node = current_node.next
+        # if found == True:
+        #     self.size -= 1
+        # else:
+        #     raise ValueError('Item not found: {}'.format(item)) 
         # IF IT"S NOT IN THERE EDGE CASE
 
 

@@ -20,6 +20,7 @@ class HashTable(object):
         """Return a string representation of this hash table."""
         return 'HashTable({!r})'.format(self.items())
 
+# IMPORTANT. LinkedList also has find method
     def _bucket_index(self, key):
         """Return the bucket index where the given key would be stored."""
         # Calculate the given key's hash code and transform into bucket index
@@ -75,8 +76,15 @@ class HashTable(object):
         # TODO: Find bucket where given key belongs
         # TODO: Check if key-value entry exists in bucket
         # If there's a for loop in these operations, refactor
-        for 
+        bucket_index = self._bucket_index(key)
+        bucket = self.buckets[bucket_index]
+        finder = bucket.find(lambda node_index: node_index[0] == key)
 
+        if finder == True:
+            return True
+        else:
+            return False
+        
     def get(self, key):
         """Return the value associated with the given key, or raise KeyError.
         TODO: Running time: O(???) Why and under what conditions?"""
@@ -86,6 +94,14 @@ class HashTable(object):
         # TODO: Otherwise, raise error to tell user get failed
         # Hint: raise KeyError('Key not found: {}'.format(key))
         # If there's a for loop in these operations, refactor
+        bucket_index = self._bucket_index(key)
+        bucket = self.buckets[bucket_index]
+        finder = bucket.find(lambda node_index: node_index[0] == key)
+
+        if finder == True:
+            return finder[1]
+        else:
+            raise KeyError('Key not found: {}'.format(key))
 
     def set(self, key, value):
         """Insert or update the given key with its associated value.
@@ -95,6 +111,15 @@ class HashTable(object):
         # TODO: If found, update value associated with given key
         # TODO: Otherwise, insert given key-value entry into bucket
         # If there's a for loop in these operations, refactor
+        bucket_index = self._bucket_index(key)
+        bucket = self.buckets[bucket_index]
+        finder = bucket.find(lambda node_index: node_index[0] == key)
+
+        if finder == None:
+            bucket.append(key, value)
+        else:
+            #TODO: NEED to be able to update value
+
 
     def delete(self, key):
         """Delete the given key from this hash table, or raise KeyError.
@@ -105,7 +130,11 @@ class HashTable(object):
         # TODO: Otherwise, raise error to tell user delete failed
         # Hint: raise KeyError('Key not found: {}'.format(key))
         # If there's a for loop in these operations, refactor
+        bucket_index = self._bucket_index(key)
+        bucket = self.buckets[bucket_index]
+        finder = bucket.find(lambda node_index: node_index[0] == key)
 
+        if finder == True:
 
 def test_hash_table():
     ht = HashTable()
