@@ -6,8 +6,9 @@ def read_sterilize_source(source_text):
     """Filters out all punctuation and white space (line breaks + spaces) using regex and
     substitutes with a space " ". Then splits into array
     Updated for edge cases '. Now keeps words that use ' as part of word (I've, haven't, etc.)"""
-    # with open(source_text) as file:
-    #     source = file.read()
+    #temporarily uncommented for nth order markov
+    with open(source_text) as file:
+        source = file.read()
     filtered = re.sub(r'\W*[^\'\w+\']', " ", source).split()
     return filtered
 # TODO: REFACTOR TO ACCOUNT FOR SENTENCES. IMPORTANT FOR MARKOV CHAINS
@@ -113,8 +114,9 @@ def multiple_stochastic_sampling(words_dict):
     return tmp_dict
 
 if __name__ == "__main__":
-    with open("fish.txt", "r") as file:
-        source = file.read()
+    #uncomment to test file
+    # with open("fish.txt", "r") as file:
+    #     source = file.read()
     # removes symbols, punctuation, etc. from source text and puts in array
     sterilized_source = read_sterilize_source(source)
     # retrieves uniques from above sterilized source

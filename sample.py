@@ -1,5 +1,6 @@
 from pprint import pprint
 from histogram import pick_random_word
+from histogram import read_sterilize_source
 import random
 
 
@@ -26,6 +27,33 @@ def stochastic_sample(words_dict):
         if tmp_dict[value] >= random_picker:
             return value
 
+def markov_chain_nth_order(token_list, order = 4):
+    """Returns a data structure of word A followed by word B in a nested dictionary.
+    Ex: ['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish', 'two', 'fish']
+    {'one': {'fish': 1}, 'fish': {'two': 2, 'red': 1, 'blue': 1}, 'two': {'fish': 2}, 'red': {'fish': 1}, 'blue': {'fish': 1}}"""
+    walk_steps = 1
+    nest_dict = {}
+    step_counter = 0
+    total_steps = len(token_list)
+
+    for i in range(total_steps - order):
+            # returns a nested dictionary of word A which is followed by word B
+            # {'one': {'fish': 1}
+        if token_list[i] not in nest_dict:
+            tmp_dict = {}
+            tmp_dict[token_list[i+1]] = 1
+            nest_dict[token_list[i]] = tmp_dict
+        elif token_list[i] in nest_dict:
+            # iterates through nested dictionary and adds to words in the nested dictionary
+            # ex: fish': {'two': 1} => fish': {'two': 2}
+            if token_list[i+1] in nest_dict[token_list[i]]:
+                nest_dict[token_list[i]][token_list[i + 1]] += 1
+            else:
+                nest_dict[token_list[i]][token_list[i + 1]] = 1
+        step_counter += 1
+    step_counter = 0
+    return nest_dict
+
 def markov_chain(token_list):
     """Returns a data structure of word A followed by word B in a nested dictionary.
     Ex: ['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish', 'two', 'fish']
@@ -37,7 +65,7 @@ def markov_chain(token_list):
 
     for i in range(total_steps - 1):
         # Not necessary walk steps. Tried to account for longer more accurate lookaheads but don't know how to implement
-        while step_counter < (walk_steps):
+        while step_counter < walk_steps:
             # returns a nested dictionary of word A which is followed by word B
             # {'one': {'fish': 1}
             if token_list[i] not in nest_dict:
@@ -70,12 +98,13 @@ def markov_chain_walk(chain):
     return words_picked_list
 
 if __name__ == '__main__':
+    corpus = read_sterilize_source("sarcasm.txt")
     # 1: Get a list of tokens from a sentence or file
     words = "one fish two fish red fish blue fish two fish".split()
     # words = ['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish', 'two', 'fish']
 
     # 2: Create the Markov chain structure from the list of tokens
-    chain = markov_chain(words)
+    chain = markov_chain_nth_order(corpus)
     pprint(chain)
     # print(type(chain))
 
