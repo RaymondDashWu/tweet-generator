@@ -11,7 +11,8 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return markov_chain_walk(markov_chain_nth_order("sarcasm.txt"))
+    print("Hello world")
+    # return markov_chain_walk(markov_chain_nth_order("sarcasm.txt"))
 
 # if __name__ == "__main__":
 #     corpus = read_sterilize_source("sarcasm.txt")
