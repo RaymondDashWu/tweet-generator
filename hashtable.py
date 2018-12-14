@@ -80,7 +80,7 @@ class HashTable(object):
         bucket = self.buckets[bucket_index]
         finder = bucket.find(lambda node_index: node_index[0] == key)
 
-        if finder == True:
+        if finder is not None:
             return True
         else:
             return False
@@ -98,10 +98,9 @@ class HashTable(object):
         bucket = self.buckets[bucket_index]
         finder = bucket.find(lambda node_index: node_index[0] == key)
 
-        if finder == True:
+        if finder is not None:
             return finder[1]
-        else:
-            raise KeyError('Key not found: {}'.format(key))
+        raise KeyError('Key not found: {}'.format(key))
 
     def set(self, key, value):
         """Insert or update the given key with its associated value.
@@ -116,10 +115,11 @@ class HashTable(object):
         finder = bucket.find(lambda node_index: node_index[0] == key)
 
         if finder == None:
-            bucket.append(key, value)
+            bucket.append((key, value))
+            self.length_in_bucket += 1
         else:
-            #TODO: NEED to be able to update value
-
+            bucket.delete(finder)
+            bucket.append((key, value))
 
     def delete(self, key):
         """Delete the given key from this hash table, or raise KeyError.
@@ -134,7 +134,11 @@ class HashTable(object):
         bucket = self.buckets[bucket_index]
         finder = bucket.find(lambda node_index: node_index[0] == key)
 
-        if finder == True:
+        if finder is not None:
+            bucket.delete(finder)
+            self.length_in_bucket -= 1
+        else:
+            raise KeyError('Key not found: {}'.format(key))
 
 def test_hash_table():
     ht = HashTable()
@@ -155,7 +159,7 @@ def test_hash_table():
     print('length: {}'.format(ht.length()))
 
     # Enable this after implementing delete method
-    delete_implemented = False
+    delete_implemented = True
     if delete_implemented:
         print('\nTesting delete:')
         for key in ['I', 'V', 'X']:
