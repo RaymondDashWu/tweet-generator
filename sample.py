@@ -2,6 +2,10 @@ from pprint import pprint
 from histogram import pick_random_word
 from histogram import read_sterilize_source
 import random
+from dictogram import Dictogram
+
+# corpus = "one fish two fish red fish blue fish two fish".split()
+corpus = read_sterilize_source("sarcasm.txt")
 
 
 def stochastic_sample(words_dict):
@@ -39,19 +43,35 @@ def markov_chain_nth_order(token_list, order = 4):
     for i in range(total_steps - order):
             # returns a nested dictionary of word A which is followed by word B
             # {'one': {'fish': 1}
-        if token_list[i] not in nest_dict:
-            tmp_dict = {}
-            tmp_dict[token_list[i+1]] = 1
-            nest_dict[token_list[i]] = tmp_dict
-        elif token_list[i] in nest_dict:
-            # iterates through nested dictionary and adds to words in the nested dictionary
-            # ex: fish': {'two': 1} => fish': {'two': 2}
-            if token_list[i+1] in nest_dict[token_list[i]]:
-                nest_dict[token_list[i]][token_list[i + 1]] += 1
-            else:
-                nest_dict[token_list[i]][token_list[i + 1]] = 1
-        step_counter += 1
-    step_counter = 0
+        type_storage = tuple(token_list[i + index] for index in range(order))
+        if type_storage not in nest_dict:
+            nest_dict[type_storage] = Dictogram()
+            # Commented out. This is literally becoming Dictogram() esp after referencing my prior code
+            # for word in type_storage:
+                # if word in type_storage:
+                #     nest_dict[word] += 1
+                # else:
+                #     nest_dict[word] = 1
+        nest_dict[type_storage].add_count(token_list[i + order])
+        
+
+
+        
+            
+            
+            
+    #         tmp_dict = {}
+    #         tmp_dict[token_list[i+1]] = 1
+    #         nest_dict[token_list[i]] = tmp_dict
+    #     elif token_list[i] in nest_dict:
+    #         # iterates through nested dictionary and adds to words in the nested dictionary
+    #         # ex: fish': {'two': 1} => fish': {'two': 2}
+    #         if token_list[i+1] in nest_dict[token_list[i]]:
+    #             nest_dict[token_list[i]][token_list[i + 1]] += 1
+    #         else:
+    #             nest_dict[token_list[i]][token_list[i + 1]] = 1
+    #     step_counter += 1
+    # step_counter = 0
     return nest_dict
 
 def markov_chain(token_list):
@@ -89,23 +109,24 @@ def markov_chain_walk(chain):
     words_picked_list = [start_word]
 
     while total_words_picked < 10:
-        possible_current_words = chain[start_word]
+        # possible_current_words = chain[start_word]
             # given histogram, pick one word at random based on frequency
-        start_word = stochastic_sample(possible_current_words)
+        # start_word = stochastic_sample(chain)
+        start_word = random.choice(corpus)
         # print('current_word:', current_word)
         words_picked_list.append(start_word)
         total_words_picked += 1
     return words_picked_list
 
 if __name__ == '__main__':
-    corpus = read_sterilize_source("sarcasm.txt")
+    # corpus = read_sterilize_source("sarcasm.txt")
     # 1: Get a list of tokens from a sentence or file
-    words = "one fish two fish red fish blue fish two fish".split()
+    # corpus = "one fish two fish red fish blue fish two fish".split()
     # words = ['one', 'fish', 'two', 'fish', 'red', 'fish', 'blue', 'fish', 'two', 'fish']
 
     # 2: Create the Markov chain structure from the list of tokens
     chain = markov_chain_nth_order(corpus)
-    pprint(chain)
+    # pprint(chain)
     # print(type(chain))
 
     # 3: Walk the Markov chain to get a list of words in the generated sentence
