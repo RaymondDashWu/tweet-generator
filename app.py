@@ -10,7 +10,7 @@ from flask import Flask
 app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def hello_world():
-    corpus = read_sterilize_source("sarcasm.txt")
+    corpus = read_sterilize_source("sarcasm-heroku.txt")
     chain = markov_chain_nth_order(corpus)
     sentence_list = markov_chain_walk(chain)
     print('sentence_list:', sentence_list)
