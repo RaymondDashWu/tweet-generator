@@ -1,9 +1,10 @@
 import cleanup
 import tokenize
 import word_count
-from sample import *
+from sample import markov_chain_walk, markov_chain_nth_order
  # import sample
 import sentence
+from histogram import read_sterilize_source
  
 from flask import Flask
 app = Flask(__name__)
@@ -12,11 +13,11 @@ app = Flask(__name__)
 def hello_world():
     # return sample
     return markov_chain_walk(markov_chain_nth_order("sarcasm.txt"))
-if __name__ == "__main__":
-    corpus = read_sterilize_source("sarcasm.txt")
-    chain = markov_chain_nth_order(corpus)
-    sentence_list = markov_chain_walk(chain)
-    print('sentence_list:', sentence_list)
+# if __name__ == "__main__":
+#     corpus = read_sterilize_source("sarcasm.txt")
+#     chain = markov_chain_nth_order(corpus)
+#     sentence_list = markov_chain_walk(chain)
+#     print('sentence_list:', sentence_list)
      
      
      
