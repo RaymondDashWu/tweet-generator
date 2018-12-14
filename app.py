@@ -8,7 +8,6 @@ from histogram import read_sterilize_source
  
 from flask import Flask
 app = Flask(__name__)
-
 @app.route('/')
 def hello_world():
     corpus = read_sterilize_source("sarcasm.txt")
@@ -17,7 +16,7 @@ def hello_world():
     print('sentence_list:', sentence_list)
 
 if __name__ == "__main__":
-    hello_world.run()
+    hello_world()
      
      
      
