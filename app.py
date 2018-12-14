@@ -14,7 +14,7 @@ def hello_world():
     chain = markov_chain_nth_order(corpus)
     sentence_list = markov_chain_walk(chain)
     print('sentence_list:', sentence_list)
-    return hello_world()
+    # return hello_world()
 
 if __name__ == "__main__":
     hello_world()
